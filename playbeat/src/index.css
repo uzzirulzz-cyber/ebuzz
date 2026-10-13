@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+@theme {
+  --color-pbt-bg: #0a0c10;
+  --color-pbt-panel: #11141c;
+  --color-pbt-border: #1f2632;
+  --color-pbt-accent: #4f8cff;
+  --color-pbt-ftv: #ff9f43;
+  --color-pbt-org: #4fc3f7;
+  --font-display: "Outfit", "system-ui", sans-serif;
+  --font-body: "Plus Jakarta Sans", "system-ui", sans-serif;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html, body, #root {
+  min-height: 100vh;
+  background: var(--color-pbt-bg);
+  color: rgb(241 245 249);
+  font-family: var(--font-body);
+}
+
+.pbt-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
+}
