@@ -1,0 +1,11 @@
+# Ruff configuration for scripts/ tooling.
+# Kept as ruff.toml (not pyproject.toml) so Vercel does not auto-detect this
+# static site as a Python project and look for a Python entrypoint.
+line-length = 110
+target-version = "py310"
+
+[lint]
+select = ["E", "F", "W", "I", "UP", "B"]
+
+[lint.isort]
+known-first-party = ["build_catalog", "build_bundle"]

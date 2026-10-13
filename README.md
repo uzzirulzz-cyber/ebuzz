@@ -63,6 +63,7 @@ Neither upstream is a web app, so "existing pages, components, CSS, artwork" map
   normalization, provider labels for `_pluto`/`_samsung`/… files).
 - **`scripts/build_bundle.py`** — single-file `dist/index.html` build (works offline / `file://`).
 - **Embedded AI Studio app** (`#/app`, sidebar "Web app") — renders the companion app ([ai.studio](https://ai.studio/apps/5d188f2a-5162-4288-a32e-990a76df807a)) in an iframe panel with an "Open app" launch-card fallback for when Google blocks framing or requires sign-in.
+- **Vercel-ready** — `vercel.json` pins `framework: null` (Other/static preset) and serves `app/` as the static output, so Vercel does not auto-detect the Python tooling and look for a Python entrypoint.
 - **CI** (`.github/workflows/ci.yml`) — ruff lint, "playlists must be current" gate, catalog +
   bundle build, artifact upload, GitHub Pages deploy job. All upstream workflows kept.
 - **`Makefile`**, **`pyproject.toml`** (ruff config), **MIT `LICENSE`**, refreshed `README`,
