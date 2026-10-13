@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Free-TV Player · live channels catalog</title>
+<meta name="description" content="Browse, search and watch 20,000+ free live TV channels aggregated from the Free-TV and iptv-org community playlists. No stream is hosted here." />
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="%234f8cff"/><path d="M12 9l11 7-11 7z" fill="white"/></svg>' />
+<link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="topbar">
+  <a class="brand" href="#/" aria-label="Free-TV Player home">
+    <span class="brand-mark">▶</span> Free-TV <span class="brand-sub">Player</span>
+  </a>
+  <div class="searchbox">
+    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5Zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14Z"/></svg>
+    <input id="global-search" type="search" autocomplete="off" spellcheck="false"
+           placeholder="Search 20,000+ channels — press /" aria-label="Search all channels" />
+  </div>
+  <button id="theme-toggle" class="icon-btn" title="Toggle light / dark theme" aria-label="Toggle color theme">◐</button>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Catalog navigation">
+    <div class="sidebar-scroll">
+      <section>
+        <h2>Countries</h2>
+        <ul id="nav-countries" class="nav-list"></ul>
+      </section>
+      <section>
+        <h2>Categories</h2>
+        <ul id="nav-cats" class="nav-list"></ul>
+      </section>
+      <section>
+        <h2>Web app</h2>
+        <ul class="nav-list">
+          <li><a href="#/app" id="nav-app-link">eBuzz · AI Studio app</a></li>
+        </ul>
+      </section>
+      <section class="about">
+        <h2>Sources</h2>
+        <ul class="nav-list">
+          <li><a href="https://github.com/Free-TV/IPTV" target="_blank" rel="noopener noreferrer">Free-TV/IPTV ↗</a></li>
+          <li><a href="https://github.com/iptv-org/iptv" target="_blank" rel="noopener noreferrer">iptv-org/iptv ↗</a></li>
+        </ul>
+        <p class="muted small">Community playlists of publicly available streams. This player hosts, proxies and re-distributes nothing — playback uses the original broadcaster URLs.</p>
+      </section>
+    </div>
+  </nav>
+
+  <main id="main" tabindex="-1">
+    <div id="stats" class="stats" aria-label="Catalog statistics"></div>
+    <div id="view" aria-live="polite"></div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <p>
+    <strong>Free-TV Player</strong> is a catalog and web player for third-party, publicly listed streams
+    aggregated from <a href="https://github.com/Free-TV/IPTV" target="_blank" rel="noopener noreferrer">Free-TV</a>
+    and <a href="https://github.com/iptv-org/iptv" target="_blank" rel="noopener noreferrer">iptv-org</a>.
+    We host nothing, proxy nothing and charge nothing; every stream remains the property of its broadcaster,
+    may be geo-restricted, and can disappear at any time. Availability is not guaranteed.
+  </p>
+</footer>
+
+<div class="modal" id="player-modal" hidden role="dialog" aria-modal="true" aria-label="Channel player">
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-panel">
+    <header class="modal-head">
+      <img id="pl-logo" class="pl-logo" alt="" width="44" height="44" />
+      <div class="pl-titles">
+        <h3 id="pl-name"></h3>
+        <p id="pl-meta" class="muted small"></p>
+      </div>
+      <button class="icon-btn" data-close aria-label="Close player">✕</button>
+    </header>
+    <div class="player-stage">
+      <video id="video" controls playsinline preload="none"></video>
+      <div id="player-fallback" class="player-fallback" hidden>
+        <p id="player-fallback-text"></p>
+        <button id="player-fallback-btn" class="btn">Open on provider ↗</button>
+      </div>
+    </div>
+    <footer class="modal-foot">
+      <button id="pl-copy" class="btn">Copy M3U entry</button>
+      <a id="pl-raw" class="btn ghost" target="_blank" rel="noopener noreferrer">Open stream URL ↗</a>
+      <span id="pl-status" class="muted small"></span>
+    </footer>
+  </div>
+</div>
+
+<script src="assets/js/vendor/hls.min.js" defer></script>
+<script src="assets/js/app.js" defer></script>
+</body>
+</html>

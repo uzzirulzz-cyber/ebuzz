@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install tooling
+        run: pip install pycountry ruff
+      - name: Lint new tooling
+        run: ruff check scripts/
+      - name: Regenerate M3U playlists (must be current)
+        run: |
+          python3 make_playlist.py
+          git diff --exit-code -- playlist.m3u8 playlists/ \
+            || { echo "::error::Playlists are stale — run make_playlist.py and commit the result"; exit 1; }
+      - name: Build JS catalog
+        run: python3 scripts/build_catalog.py
+      - name: Build single-file bundle
+        run: python3 scripts/build_bundle.py
+      - name: Sanity-check bundle
+        run: |
+          test -s dist/index.html
+          grep -q "FREETV_CATALOG" dist/index.html
+      - uses: actions/upload-artifact@v4
+        with:
+          name: free-tv-app
+          path: dist/
+
+  deploy-pages:
+    needs: build
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pycountry && python3 scripts/build_catalog.py && python3 scripts/build_bundle.py
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/
+      - id: deployment
+        uses: actions/deploy-pages@v4

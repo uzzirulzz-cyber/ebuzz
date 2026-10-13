@@ -1,0 +1,15 @@
+[project]
+name = "free-tv-production"
+version = "1.0.0"
+description = "Production build of the Free-TV playlist project: merged catalog, web player, CI"
+requires-python = ">=3.10"
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["build_catalog", "build_bundle"]
